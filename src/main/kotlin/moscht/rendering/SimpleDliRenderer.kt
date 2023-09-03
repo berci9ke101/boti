@@ -10,11 +10,11 @@ import java.lang.RuntimeException
 class SimpleDliRenderer : MachineRenderer {
 
     private var reply = ""
-    override suspend fun renderData(vararg apis: MosogepAsyncApi) {
+    override suspend fun renderData(vararg apis: MosogepAsyncApi, filter: (m: Machine) -> Boolean) {
         val ex = RuntimeException("Cannot reach any API")
         for (api in apis) {
             try {
-                return api.loadMachines().filter{machine : Machine -> machine.type == MachineType.WashingMachine}.forEach(::renderMachine)
+                return api.loadMachines().filter(filter).forEach(::renderMachine)
             } catch (timeout: MosogepAsyncApi.UnreachableApiError) {
                 ex.addSuppressed(timeout)
             }
@@ -37,9 +37,9 @@ class SimpleDliRenderer : MachineRenderer {
     private fun renderStatus(status: MachineStatus): String {
         val (stat, since) = status.effectiveStatus()
         return when (stat) {
-            MachineStatus.MachineStatusType.Available -> ":green_circle:"
-            MachineStatus.MachineStatusType.InUse -> ":red_circle:"
-            MachineStatus.MachineStatusType.Unknown -> ":no_entry: (${since} órája)"
+            MachineStatus.MachineStatusType.Available -> " :green_circle:"
+            MachineStatus.MachineStatusType.InUse -> " :red_circle:"
+            MachineStatus.MachineStatusType.Unknown -> " :no_entry: (${since} órája)"
         }
     }
 
