@@ -1,8 +1,76 @@
-fun main(args: Array<String>)
-{
-    println("Hello World!")
+import com.jessecorbett.diskord.bot.bot
+import com.jessecorbett.diskord.bot.classicCommands
+import hu.kszi2.boti.*
+import hu.kszi2.boti.rendering.SimpleCliRenderer
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+/**
+ * Reads in the bot token
+ *
+ * @throws RuntimeException when could not locate the file with the token
+ */
+private val BOT_TOKEN = try {
+    ClassLoader.getSystemResource("bot-token.txt").readText().trim()
+} catch (error: Exception) {
+    throw RuntimeException(
+        "Failed to load bot token. Message: ", error
+    )
+}
+
+suspend fun main() {
+    //creating the bot
+    bot(BOT_TOKEN) {
+//        // Modern interactions API for slash commands, user commands, etc
+//        interactions {
+//            slashCommand("echo", "Makes the bot say something", permissions = Permissions.of(Permission.SEND_MESSAGES)) {
+//                val message by stringParameter("message", "The message", optional = true)
+//                callback {
+//                    respond {
+//                        content = if (message != null) {
+//                            message
+//                        } else {
+//                            "The message was null, because it is optional"
+//                        }
+//                    }
+//                }
+//            }
+//
+//            commandGroup("emoji", "Send an emoji to the server") {
+//                subgroup("smile", "Smile emoji") {
+//                    slashCommand("slight", "A slight smile emoji") {
+//                        callback {
+//                            respond {
+//                                content = "🙂"
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                slashCommand("shh", "The shh emoji") {
+//                    val secret by stringParameter("secret", "Send the emoji secretly")
+//                    callback {
+//                        respond {
+//                            content = "🤫"
+//                            if (secret != null) {
+//                                ephemeral
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+
+        // The old-fashioned way, it uses messages, such as .ping, for commands
+        classicCommands(".") {
+            //ping cmd
+            command("ping") {
+                it.respond("pong")
+            }
+
+            //wash cmd
+            command("wash") {
+                val reply = SimpleCliRenderer().renderData(MosogepApiV1(), MosogepApiV2())
+                //it.reply(reply)
+            }
+        }
+    }
 }
