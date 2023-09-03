@@ -1,4 +1,4 @@
-package hu.kszi2.boti
+package moscht
 
 import hu.kszi2.boti.filter.MachineFilter
 

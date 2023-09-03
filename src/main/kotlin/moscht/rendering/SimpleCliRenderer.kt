@@ -1,6 +1,10 @@
-package hu.kszi2.boti.rendering
+package moscht.rendering
 
-import hu.kszi2.boti.*
+import hu.kszi2.boti.rendering.MachineRenderer
+import moscht.Machine
+import moscht.MachineStatus
+import moscht.MachineType
+import moscht.MosogepAsyncApi
 import java.lang.RuntimeException
 
 class SimpleCliRenderer : MachineRenderer {

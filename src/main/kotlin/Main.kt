@@ -1,7 +1,8 @@
 import com.jessecorbett.diskord.bot.bot
 import com.jessecorbett.diskord.bot.classicCommands
-import hu.kszi2.boti.*
-import hu.kszi2.boti.rendering.SimpleCliRenderer
+import moscht.MosogepApiV1
+import moscht.MosogepApiV2
+import moscht.rendering.SimpleDliRenderer
 
 /**
  * Reads in the bot token
@@ -61,15 +62,15 @@ suspend fun main() {
 
         // The old-fashioned way, it uses messages, such as .ping, for commands
         classicCommands(".") {
-            //ping cmd
+
             command("ping") {
-                it.respond("pong")
+                it.reply("pong")
             }
 
-            //wash cmd
             command("wash") {
-                val reply = SimpleCliRenderer().renderData(MosogepApiV1(), MosogepApiV2())
-                //it.reply(reply)
+                val renderer = SimpleDliRenderer()
+                renderer.renderData(MosogepApiV1(), MosogepApiV2())
+                it.reply(renderer.getData())
             }
         }
     }

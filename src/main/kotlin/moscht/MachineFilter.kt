@@ -1,6 +1,6 @@
 package hu.kszi2.boti.filter
 
-import hu.kszi2.boti.Machine
+import moscht.Machine
 
 interface MachineFilter {
     companion object {

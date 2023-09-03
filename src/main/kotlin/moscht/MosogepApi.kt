@@ -1,4 +1,4 @@
-package hu.kszi2.boti
+package moscht
 
 interface MosogepAsyncApi {
     suspend fun loadMachines(): List<Machine>

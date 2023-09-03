@@ -1,6 +1,6 @@
 package hu.kszi2.boti.parsing
 
-import hu.kszi2.boti.Machine
+import moscht.Machine
 
 interface MachineAsyncParser {
     suspend fun parse(payload: String): List<Machine>

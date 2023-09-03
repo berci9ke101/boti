@@ -1,6 +1,6 @@
 package hu.kszi2.boti.parsing
 
-import hu.kszi2.boti.Machine
+import moscht.Machine
 import kotlinx.coroutines.*
 
 class DefaultAsyncParser(private val blockingImpl: MachineParser = DefaultJsonParser()) : MachineAsyncParser {

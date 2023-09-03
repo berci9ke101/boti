@@ -1,4 +1,4 @@
-package hu.kszi2.boti
+package moscht
 
 import java.time.Instant
 import java.time.temporal.ChronoUnit

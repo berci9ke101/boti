@@ -2,10 +2,10 @@ package hu.kszi2.boti.parsing
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
-import hu.kszi2.boti.Machine
-import hu.kszi2.boti.MachineStatus
-import hu.kszi2.boti.MachineStatus.*
-import hu.kszi2.boti.MachineType
+import moscht.Machine
+import moscht.MachineStatus
+import moscht.MachineStatus.*
+import moscht.MachineType
 import java.time.Instant
 
 class DefaultJsonParser(val unknownThreshold: Int = 3) : MachineParser {

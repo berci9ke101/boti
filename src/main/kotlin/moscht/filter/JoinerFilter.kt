@@ -1,6 +1,7 @@
-package hu.kszi2.boti.filter
+package moscht.filter
 
-import hu.kszi2.boti.Machine
+import hu.kszi2.boti.filter.MachineFilter
+import moscht.Machine
 
 sealed class JoinerFilter(
     private val lhs: MachineFilter,
