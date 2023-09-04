@@ -12,6 +12,7 @@ class SimpleDliRenderer : MachineRenderer {
     private var reply = ""
     override suspend fun renderData(vararg apis: MosogepAsyncApi, filter: (m: Machine) -> Boolean) {
         val ex = RuntimeException("Cannot reach any API")
+        reply = ""
         for (api in apis) {
             try {
                 return api.loadMachines().filter(filter).forEach(::renderMachine)
@@ -28,9 +29,9 @@ class SimpleDliRenderer : MachineRenderer {
 
     private fun renderMachine(machine: Machine) {
         reply += if (machine.level < 10) {
-            "0${machine.level}. ${renderType(machine.type)}: ${renderStatus(machine.status)}\n"
+            "`0${machine.level}.` ${renderType(machine.type)}: ${renderStatus(machine.status)}\n"
         } else {
-            "${machine.level}. ${renderType(machine.type)}: ${renderStatus(machine.status)}\n"
+            "`${machine.level}.` ${renderType(machine.type)}: ${renderStatus(machine.status)}\n"
         }
     }
 
@@ -45,7 +46,7 @@ class SimpleDliRenderer : MachineRenderer {
 
     private fun renderType(type: MachineType): String {
         return when (type) {
-            is MachineType.WashingMachine -> "Mosógép   "
+            is MachineType.WashingMachine -> "Mosógép   "
             is MachineType.Dryer -> "Szárítógép"
             is MachineType.Unknown -> "Ismeretlen"
         }
