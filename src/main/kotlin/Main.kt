@@ -4,6 +4,7 @@ import com.jessecorbett.diskord.bot.classicCommands
 import com.jessecorbett.diskord.bot.interaction.interactions
 import moscht.*
 import moscht.rendering.SimpleDliRenderer
+import java.io.File
 import java.time.Clock
 import java.time.LocalDateTime
 
@@ -13,7 +14,9 @@ import java.time.LocalDateTime
  * @throws RuntimeException when could not locate the file with the token
  */
 private val BOT_TOKEN = try {
-    ClassLoader.getSystemResource("bot-token.txt").readText().trim()
+    File("bot-token.txt").bufferedReader().use {
+        it.readText()
+    }
 } catch (error: Exception) {
     throw RuntimeException(
         "Failed to load bot token. Message: ", error
