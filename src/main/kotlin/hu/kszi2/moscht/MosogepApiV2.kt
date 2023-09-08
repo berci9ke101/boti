@@ -1,8 +1,8 @@
-package moscht
+package hu.kszi2.moscht
 
-import hu.kszi2.boti.parsing.DefaultAsyncParser
-import hu.kszi2.boti.parsing.MachineAsyncParser
-import moscht.MosogepAsyncApi.UnreachableApiError
+import hu.kszi2.moscht.MosogepAsyncApi.UnreachableApiError
+import hu.kszi2.moscht.parsing.DefaultAsyncParser
+import hu.kszi2.moscht.parsing.MachineAsyncParser
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*

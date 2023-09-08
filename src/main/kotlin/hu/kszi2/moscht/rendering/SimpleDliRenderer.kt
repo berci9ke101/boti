@@ -1,11 +1,9 @@
-package moscht.rendering
+package hu.kszi2.moscht.rendering
 
-import hu.kszi2.boti.rendering.MachineRenderer
-import moscht.Machine
-import moscht.MachineStatus
-import moscht.MachineType
-import moscht.MosogepAsyncApi
-import java.lang.RuntimeException
+import hu.kszi2.moscht.Machine
+import hu.kszi2.moscht.MachineStatus
+import hu.kszi2.moscht.MachineType
+import hu.kszi2.moscht.MosogepAsyncApi
 
 class SimpleDliRenderer : MachineRenderer {
 

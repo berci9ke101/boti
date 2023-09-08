@@ -1,4 +1,4 @@
-package moscht
+package hu.kszi2.moscht
 
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -21,9 +21,7 @@ class MachineStatus(val status: MachineStatusType, val lastStatus: Instant = Ins
 
         other as MachineStatus
 
-        if (effectiveStatus().first != other.effectiveStatus().first) return false
-
-        return true
+        return effectiveStatus().first == other.effectiveStatus().first
     }
 
     override fun hashCode(): Int {
