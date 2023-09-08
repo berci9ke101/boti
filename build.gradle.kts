@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    implementation("ch.qos.logback:logback-classic:1.4.6")
     implementation("com.jessecorbett:diskord-bot:5.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("io.ktor:ktor-client-core:2.2.4")
@@ -40,4 +41,10 @@ tasks.jar {
     manifest {
         attributes["Main-Class"] = application.mainClass
     }
+    val dependencies = configurations
+        .runtimeClasspath
+        .get()
+        .map(::zipTree)
+    from(dependencies)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
