@@ -2,5 +2,6 @@ version: "3"
 services:
   boti:
     build: .
+    restart: unless-stopped
     volumes:
       - ./runtime:/runtime
