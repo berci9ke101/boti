@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 private val BOT_TOKEN = try {
     File("bot-token.txt").bufferedReader().use {
         it.readText()
-    }
+    }.trim()
 } catch (error: Exception) {
     throw RuntimeException(
         "Failed to load bot token. Message: ", error
