@@ -3,4 +3,4 @@ services:
   boti:
     build: .
     volumes:
-      - ./runtime:/app/runtime
+      - ./runtime:/runtime
