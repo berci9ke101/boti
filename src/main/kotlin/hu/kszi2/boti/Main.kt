@@ -16,7 +16,7 @@ import java.time.LocalDateTime
  * @throws RuntimeException when could not locate the file with the token
  */
 private val BOT_TOKEN = try {
-    File("bot-token.txt").bufferedReader().use {
+    File("runtime/bot-token.txt").bufferedReader().use {
         it.readText()
     }.trim()
 } catch (error: Exception) {
