@@ -1,17 +1,15 @@
 package hu.kszi2.boti.database
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.addLogger
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.Clock
-import java.time.LocalDateTime
 
 object Reminders : IntIdTable() {
     val title = varchar("title", 50)
@@ -37,9 +35,13 @@ object WashingReminders : IntIdTable() {
 }
 
 object Machines : IntIdTable() {
-    val type = varchar("type", 1).uniqueIndex("machine")
-    val level = integer("level").uniqueIndex("machine")
-    val description = varchar("description", 300).nullable()
+    val type = varchar("type", 1)
+    val level = integer("level")
+    val description = text("description").nullable()
+
+    init {
+        uniqueIndex(type, level)
+    }
 }
 
 class Reminder(id: EntityID<Int>) : IntEntity(id) {
@@ -80,7 +82,7 @@ class Machine(id: EntityID<Int>) : IntEntity(id) {
 fun initdb() {
     Database.connect("jdbc:sqlite:runtime/data.db", "org.sqlite.JDBC")
     transaction {
-        addLogger(StdOutSqlLogger)
+        addLogger(Slf4jSqlDebugLogger)
 
         SchemaUtils.create(
             Reminders,
@@ -93,11 +95,8 @@ fun initdb() {
         Reminder.new {
             title = "Test"
             description = "Testdesc"
-            date = kotlinx.datetime.LocalDateTime(2023, 1, 1, 11, 20)
+            date = Clock.System.now().toLocalDateTime(TimeZone.of("Europe/Budapest"))
             location = "IB028"
         }
-
-
-        println(Reminder.all().joinToString { it.title })
     }
 }
