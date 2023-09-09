@@ -3,6 +3,8 @@ package hu.kszi2.boti
 import com.jessecorbett.diskord.bot.bot
 import com.jessecorbett.diskord.bot.classicCommands
 import com.jessecorbett.diskord.bot.interaction.interactions
+import hu.kszi2.boti.command.MoschtCommand
+import hu.kszi2.boti.command.initSlashCommand
 import java.io.File
 
 /**

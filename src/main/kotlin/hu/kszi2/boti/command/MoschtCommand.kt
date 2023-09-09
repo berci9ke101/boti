@@ -1,4 +1,4 @@
-package hu.kszi2.boti
+package hu.kszi2.boti.command
 
 import com.jessecorbett.diskord.api.channel.Embed
 import com.jessecorbett.diskord.bot.interaction.InteractionBuilder
@@ -7,13 +7,9 @@ import hu.kszi2.moscht.rendering.SimpleDliRenderer
 import java.time.Clock
 import java.time.LocalDateTime
 
-fun InteractionBuilder.initSlashCommand(vararg botSlashCommands: BotSlashCommand) {
-    botSlashCommands.forEach { it.initSlashCommand(this@initSlashCommand) }
-}
-
 class MoschtCommand : BotSlashCommand() {
     override fun initSlashCommand(interactionBuilder: InteractionBuilder) {
-        interactionBuilder.slashCommand("dmoscht", "Request StatuSCH.") {
+        interactionBuilder.slashCommand("moscht", "Request StatuSCH.") {
             val args by stringParameter("argument", "Arguments.", optional = true)
             callback {
                 respond {
