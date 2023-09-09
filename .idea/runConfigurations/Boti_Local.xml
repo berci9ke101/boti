@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Boti-Local" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="hu.kszi2.boti.MainKt" />
+    <module name="boti.main" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

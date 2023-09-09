@@ -1,9 +1,12 @@
-import com.jessecorbett.diskord.api.channel.*
+package hu.kszi2.boti
+
+import com.jessecorbett.diskord.api.channel.Embed
 import com.jessecorbett.diskord.bot.bot
 import com.jessecorbett.diskord.bot.classicCommands
 import com.jessecorbett.diskord.bot.interaction.interactions
-import moscht.*
-import moscht.rendering.SimpleDliRenderer
+import hu.kszi2.moscht.*
+import hu.kszi2.moscht.rendering.SimpleDliRenderer
+import java.io.File
 import java.time.Clock
 import java.time.LocalDateTime
 
@@ -13,7 +16,9 @@ import java.time.LocalDateTime
  * @throws RuntimeException when could not locate the file with the token
  */
 private val BOT_TOKEN = try {
-    ClassLoader.getSystemResource("bot-token.txt").readText().trim()
+    File("runtime/bot-token.txt").bufferedReader().use {
+        it.readText()
+    }.trim()
 } catch (error: Exception) {
     throw RuntimeException(
         "Failed to load bot token. Message: ", error

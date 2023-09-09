@@ -1,8 +1,8 @@
-package moscht.filter
+package hu.kszi2.moscht.filter
 
-import hu.kszi2.boti.filter.MachineFilter
-import moscht.Machine
-import moscht.MachineType
+import hu.kszi2.moscht.Machine
+import hu.kszi2.moscht.MachineFilter
+import hu.kszi2.moscht.MachineType
 
 class TypeFilter(private val type: MachineType) : MachineFilter {
     override fun accept(machine: Machine): Boolean =

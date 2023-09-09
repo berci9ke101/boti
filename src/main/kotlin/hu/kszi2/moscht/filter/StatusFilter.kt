@@ -1,8 +1,8 @@
-package moscht.filter
+package hu.kszi2.moscht.filter
 
-import hu.kszi2.boti.filter.MachineFilter
-import moscht.Machine
-import moscht.MachineStatus
+import hu.kszi2.moscht.Machine
+import hu.kszi2.moscht.MachineFilter
+import hu.kszi2.moscht.MachineStatus
 
 class StatusFilter(private val stat: MachineStatus) : MachineFilter {
     override fun accept(machine: Machine): Boolean = machine.status == stat

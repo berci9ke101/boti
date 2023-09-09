@@ -1,6 +1,4 @@
-package moscht
-
-import hu.kszi2.boti.filter.MachineFilter
+package hu.kszi2.moscht
 
 class MachineStore(private val machines: List<Machine> = listOf()) {
     suspend fun reloadFromApi(api: MosogepAsyncApi) = MachineStore(api.loadMachines())
