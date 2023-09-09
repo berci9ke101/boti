@@ -1,4 +1,5 @@
 runtime/bot-token.txt
+*.vpp.bak*
 
 .gradle
 build/
