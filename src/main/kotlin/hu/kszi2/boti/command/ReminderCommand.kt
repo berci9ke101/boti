@@ -66,10 +66,22 @@ class ReminderCommand : BotSlashCommand() {
                             //preview card
                             Embed(
                                 title = title + "\t" + (location ?: ""),
-                                description = description + datetime.toString(),
+                                description = description,
                                 color = 5763719,
-                                fields = mutableListOf(EmbedField(parseIntervals(notificationtime, repeatinterval), "", true)),
-                                timestamp = datetime.toString()
+                                fields = mutableListOf(
+                                    EmbedField(
+                                        parseIntervals(notificationtime, repeatinterval),
+                                        "",
+                                        true
+                                    )
+                                ),
+                                footer = EmbedFooter(
+                                    "${
+                                        datetime.dayOfMonth.toString().padStart(2, '0')
+                                    }/${
+                                        datetime.monthValue.toString().padStart(2, '0')
+                                    }/${datetime.year} ${datetime.hour.toString().padStart(2,'0')}:${datetime.minute.toString().padStart(2,'0')}"
+                                )
                             )
                         )
                 }
