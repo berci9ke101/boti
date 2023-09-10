@@ -1,8 +1,8 @@
 package hu.kszi2.boti.command
 
 import com.jessecorbett.diskord.api.channel.*
+import com.jessecorbett.diskord.api.common.*
 import com.jessecorbett.diskord.bot.interaction.InteractionBuilder
-import java.time.Clock
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -49,7 +49,7 @@ class ReminderCommand : BotSlashCommand() {
                     parseTime(date)
                 } catch (e: Exception) {
                     respond {
-                        content = "**Invalid datetime syntax. Use YYYY-MM-DD HH:MM**"
+                        content = "**Invalid datetime syntax. Use yyyy-MM-dd HH:mm**"
                         ephemeral
                     }
                     //ABORT
@@ -61,9 +61,27 @@ class ReminderCommand : BotSlashCommand() {
                     ephemeral
                     //confirmation
                     content = "**Is this correct?**\n"
+                    //accept/decline buttons
+                    components = mutableListOf(
+                        ActionRow(
+                            mutableListOf(
+                                Button(
+                                    customId = "1",
+                                    label = "Yes",
+                                    style = ButtonStyle.Success
+                                ),
+                                Button(
+                                    customId = "2",
+                                    label = "No",
+                                    style = ButtonStyle.Danger
+                                )
+                            )
+                        )
+                    )
+
+                    //preview card
                     embeds =
                         mutableListOf(
-                            //preview card
                             Embed(
                                 title = title + "\t" + (location ?: ""),
                                 description = description,
@@ -80,7 +98,9 @@ class ReminderCommand : BotSlashCommand() {
                                         datetime.dayOfMonth.toString().padStart(2, '0')
                                     }/${
                                         datetime.monthValue.toString().padStart(2, '0')
-                                    }/${datetime.year} ${datetime.hour.toString().padStart(2,'0')}:${datetime.minute.toString().padStart(2,'0')}"
+                                    }/${datetime.year} ${
+                                        datetime.hour.toString().padStart(2, '0')
+                                    }:${datetime.minute.toString().padStart(2, '0')}"
                                 )
                             )
                         )
