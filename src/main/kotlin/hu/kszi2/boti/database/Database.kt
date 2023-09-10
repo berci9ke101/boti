@@ -10,6 +10,9 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.transactions.transactionManager
+import java.io.File
+import hu.kszi2.boti.DBPATH
 
 object Reminders : IntIdTable() {
     val title = varchar("title", 50)
@@ -51,24 +54,38 @@ class Reminder(id: EntityID<Int>) : IntEntity(id) {
     var description by Reminders.description
     var date by Reminders.date
     var location by Reminders.location
+    val repeatinterval by RepeatInterval referrersOn RepeatIntervals.reminder
+    val notificationtime by NotificationTime optionalReferrersOn NotificationTimes.reminder
+
+    override fun toString(): String {
+        return "$title \t $description \t $date \t $location"
+    }
 }
 
 class RepeatInterval(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<RepeatInterval>(RepeatIntervals)
 
     var days by RepeatIntervals.days
+    var reminder by Reminder referencedOn RepeatIntervals.reminder
+
+    override fun toString(): String {
+        return "$days"
+    }
 }
 
 class NotificationTime(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<NotificationTime>(NotificationTimes)
 
     var minutes by NotificationTimes.minutes
+    var reminder by Reminder optionalReferencedOn NotificationTimes.reminder
+    var washingReminder by WashingReminder optionalReferencedOn NotificationTimes.washingreminder
 }
 
 class WashingReminder(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<WashingReminder>(WashingReminders)
 
     var date by WashingReminders.date
+    var machine by Machine referencedOn WashingReminders.machine
 }
 
 class Machine(id: EntityID<Int>) : IntEntity(id) {
@@ -77,10 +94,24 @@ class Machine(id: EntityID<Int>) : IntEntity(id) {
     var type by Machines.type
     var level by Machines.level
     var description by Machines.description
+    var washingreminder by WashingReminder referencedOn WashingReminders.machine
 }
 
-fun initdb() {
-    Database.connect("jdbc:sqlite:runtime/data.db", "org.sqlite.JDBC")
+fun <T> dbTransaction(db: Database? = null, statement: Transaction.() -> T): T {
+    Database.connect("jdbc:sqlite:$DBPATH", "org.sqlite.JDBC")
+    return transaction(
+        db.transactionManager.defaultIsolationLevel,
+        db.transactionManager.defaultReadOnly,
+        db,
+        statement
+    )
+}
+
+fun dbInitialize() {
+    if (File(DBPATH).exists())
+        return
+
+    Database.connect("jdbc:sqlite:$DBPATH", "org.sqlite.JDBC")
     transaction {
         addLogger(Slf4jSqlDebugLogger)
 
@@ -92,11 +123,16 @@ fun initdb() {
             Machines
         )
 
-        Reminder.new {
+        val testrem = Reminder.new {
             title = "Test"
             description = "Testdesc"
             date = Clock.System.now().toLocalDateTime(TimeZone.of("Europe/Budapest"))
             location = "IB028"
+        }
+
+        RepeatInterval.new {
+            days = 1
+            reminder = testrem
         }
     }
 }
