@@ -4,6 +4,7 @@ import com.jessecorbett.diskord.bot.bot
 import com.jessecorbett.diskord.bot.classicCommands
 import com.jessecorbett.diskord.bot.interaction.interactions
 import hu.kszi2.boti.command.MoschtCommand
+import hu.kszi2.boti.command.ReminderCommand
 import hu.kszi2.boti.command.initSlashCommand
 import hu.kszi2.boti.database.*
 import java.io.File
@@ -41,7 +42,7 @@ suspend fun main() {
     bot(BOT_TOKEN) {
         // Modern interactions API for slash commands, user commands, etc
         interactions {
-            initSlashCommand(MoschtCommand())
+            initSlashCommand(MoschtCommand(), ReminderCommand())
         }
 
         // The old-fashioned way, it uses messages, such as .ping, for commands

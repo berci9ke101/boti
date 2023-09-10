@@ -17,7 +17,7 @@ import hu.kszi2.boti.DBPATH
 object Reminders : IntIdTable() {
     val title = varchar("title", 50)
     val description = varchar("description", 255).nullable()
-    val date = datetime("datetime").index().nullable()
+    val date = datetime("datetime").index()
     val location = varchar("location", 30).nullable()
 }
 
