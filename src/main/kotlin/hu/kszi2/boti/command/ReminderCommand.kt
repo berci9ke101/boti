@@ -3,20 +3,9 @@ package hu.kszi2.boti.command
 import com.jessecorbett.diskord.api.channel.*
 import com.jessecorbett.diskord.api.common.*
 import com.jessecorbett.diskord.bot.interaction.InteractionBuilder
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import hu.kszi2.boti.date.*
 
 class ReminderCommand : BotSlashCommand() {
-
-    private fun parseTime(datestring: String?): LocalDateTime {
-        val datetime = try {
-            datestring.let { LocalDateTime.parse(datestring, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) }
-        } catch (e: Exception) {
-            throw e
-        }
-        return datetime
-    }
-
     private fun parseIntervals(notificationtime: String?, repeatinterval: String?): String {
         val noti = if (notificationtime != null) {
             "Notification time : $notificationtime minute(s) before event"
@@ -46,10 +35,10 @@ class ReminderCommand : BotSlashCommand() {
             callback {
                 //parse datetime
                 val datetime = try {
-                    parseTime(date)
+                    parse(date)
                 } catch (e: Exception) {
                     respond {
-                        content = "**Invalid datetime syntax. Use yyyy-MM-dd HH:mm**"
+                        content = "**Invalid datetime syntax. (Use yyyy-MM-dd HH:mm)**"
                         ephemeral
                     }
                     //ABORT
@@ -59,19 +48,21 @@ class ReminderCommand : BotSlashCommand() {
                 //successes parsing
                 respond {
                     ephemeral
+
                     //confirmation
                     content = "**Is this correct?**\n"
+
                     //accept/decline buttons
                     components = mutableListOf(
                         ActionRow(
                             mutableListOf(
                                 Button(
-                                    customId = "1",
+                                    customId = "accept",
                                     label = "Yes",
                                     style = ButtonStyle.Success
                                 ),
                                 Button(
-                                    customId = "2",
+                                    customId = "decline",
                                     label = "No",
                                     style = ButtonStyle.Danger
                                 )
@@ -95,12 +86,12 @@ class ReminderCommand : BotSlashCommand() {
                                 ),
                                 footer = EmbedFooter(
                                     "${
-                                        datetime.dayOfMonth.toString().padStart(2, '0')
+                                        datetime?.dayOfMonth.toString().padStart(2, '0')
                                     }/${
-                                        datetime.monthValue.toString().padStart(2, '0')
-                                    }/${datetime.year} ${
-                                        datetime.hour.toString().padStart(2, '0')
-                                    }:${datetime.minute.toString().padStart(2, '0')}"
+                                        datetime?.monthValue.toString().padStart(2, '0')
+                                    }/${datetime?.year} ${
+                                        datetime?.hour.toString().padStart(2, '0')
+                                    }:${datetime?.minute.toString().padStart(2, '0')}"
                                 )
                             )
                         )

@@ -1,7 +1,10 @@
 package hu.kszi2.boti
 
+import com.jessecorbett.diskord.api.common.Button
+import com.jessecorbett.diskord.api.common.MessageInteraction
 import com.jessecorbett.diskord.bot.bot
 import com.jessecorbett.diskord.bot.classicCommands
+import com.jessecorbett.diskord.bot.events
 import com.jessecorbett.diskord.bot.interaction.interactions
 import hu.kszi2.boti.command.MoschtCommand
 import hu.kszi2.boti.command.ReminderCommand
@@ -40,6 +43,13 @@ suspend fun main() {
 
     //creating the bot
     bot(BOT_TOKEN) {
+        events {
+            onInteractionCreate {
+                if(it.id == "1"){
+                    println("\n\nHEHE\n\n")
+                }
+            }
+        }
         // Modern interactions API for slash commands, user commands, etc
         interactions {
             initSlashCommand(MoschtCommand(), ReminderCommand())
