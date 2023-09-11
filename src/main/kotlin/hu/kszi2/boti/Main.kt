@@ -1,17 +1,10 @@
 package hu.kszi2.boti
 
-import com.jessecorbett.diskord.api.common.MessageComponent
-import com.jessecorbett.diskord.api.interaction.InteractionTypeSerializer
-import com.jessecorbett.diskord.bot.bot
-import com.jessecorbett.diskord.bot.classicCommands
-import com.jessecorbett.diskord.bot.events
+import com.jessecorbett.diskord.api.interaction.MessageComponent
+import com.jessecorbett.diskord.bot.*
 import com.jessecorbett.diskord.bot.interaction.interactions
-import hu.kszi2.boti.command.MoschtCommand
-import hu.kszi2.boti.command.ReminderCommand
-import hu.kszi2.boti.command.initSlashCommand
+import hu.kszi2.boti.command.*
 import hu.kszi2.boti.database.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
 import java.io.File
 
 /**
@@ -47,8 +40,9 @@ suspend fun main() {
     bot(BOT_TOKEN) {
         events {
             onInteractionCreate {
-                if(it is MessageComponent){
-                    it.data.customId..
+                if (it is MessageComponent) {
+                    if(it.data.customId == "accept")
+                        println("HAHAHHAHAHAHA")
                 }
             }
         }
