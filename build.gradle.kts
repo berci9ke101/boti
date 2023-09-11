@@ -8,12 +8,15 @@ group = "hu.kszi2"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    maven{
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+    }
     mavenCentral()
 }
 
 dependencies {
     implementation("ch.qos.logback:logback-classic:1.4.6")
-    implementation("com.jessecorbett:diskord-bot:5.2.0")
+    implementation("com.jessecorbett:diskord-bot:5.2.1-SNAPSHOT")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("io.ktor:ktor-client-core:2.2.4")
     implementation("io.ktor:ktor-client-cio:2.2.4")

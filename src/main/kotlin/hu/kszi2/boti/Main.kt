@@ -1,7 +1,7 @@
 package hu.kszi2.boti
 
-import com.jessecorbett.diskord.api.common.Button
-import com.jessecorbett.diskord.api.common.MessageInteraction
+import com.jessecorbett.diskord.api.common.MessageComponent
+import com.jessecorbett.diskord.api.interaction.InteractionTypeSerializer
 import com.jessecorbett.diskord.bot.bot
 import com.jessecorbett.diskord.bot.classicCommands
 import com.jessecorbett.diskord.bot.events
@@ -10,6 +10,8 @@ import hu.kszi2.boti.command.MoschtCommand
 import hu.kszi2.boti.command.ReminderCommand
 import hu.kszi2.boti.command.initSlashCommand
 import hu.kszi2.boti.database.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import java.io.File
 
 /**
@@ -45,8 +47,8 @@ suspend fun main() {
     bot(BOT_TOKEN) {
         events {
             onInteractionCreate {
-                if(it.id == "1"){
-                    println("\n\nHEHE\n\n")
+                if(it is MessageComponent){
+                    it.data.customId..
                 }
             }
         }
