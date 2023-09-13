@@ -57,12 +57,12 @@ class ReminderCommand : BotSlashCommand() {
                         ActionRow(
                             mutableListOf(
                                 Button(
-                                    customId = "accept",
+                                    customId = "acceptreminder",
                                     label = "Yes",
                                     style = ButtonStyle.Success
                                 ),
                                 Button(
-                                    customId = "decline",
+                                    customId = "declinereminder",
                                     label = "No",
                                     style = ButtonStyle.Danger
                                 )

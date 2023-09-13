@@ -1,10 +1,11 @@
 package hu.kszi2.boti
 
-import com.jessecorbett.diskord.api.interaction.MessageComponent
 import com.jessecorbett.diskord.bot.*
 import com.jessecorbett.diskord.bot.interaction.interactions
 import hu.kszi2.boti.command.*
 import hu.kszi2.boti.database.*
+import hu.kszi2.boti.interaction.ReminderInteraction
+import hu.kszi2.boti.interaction.initBotInteraction
 import java.io.File
 
 /**
@@ -39,13 +40,9 @@ suspend fun main() {
     //creating the bot
     bot(BOT_TOKEN) {
         events {
-            onInteractionCreate {
-                if (it is MessageComponent) {
-                    if(it.data.customId == "accept")
-                        println("HAHAHHAHAHAHA")
-                }
-            }
+            initBotInteraction(this@bot, ReminderInteraction())
         }
+
         // Modern interactions API for slash commands, user commands, etc
         interactions {
             initSlashCommand(MoschtCommand(), ReminderCommand())
